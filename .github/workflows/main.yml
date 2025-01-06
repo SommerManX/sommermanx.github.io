@@ -11,8 +11,8 @@ jobs:
         with:
           ref: dummy-data    #checkout different branch
 
-      - name: Generate Directory Listings
-        uses: sommermanx/sommermanx.github.io@main
+      - name: Github Pages Directory Listing
+        uses: jayanta525/github-pages-directory-listing@v4.0.0
         with:
           FOLDER: data      #directory to generate index
 
