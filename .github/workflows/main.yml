@@ -16,13 +16,13 @@ jobs:
       - name: Github Pages Directory Listing
         uses: jayanta525/github-pages-directory-listing@v4.0.0
         with:
-          FOLDER: data
+          FOLDER: Archive 2024
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload generator folder
-          path: 'data'
+          path: 'Archive 2024'
 
   deploy:
     needs: pages-directory-listing
