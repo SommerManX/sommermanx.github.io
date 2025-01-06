@@ -6,13 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Directory Listings Index
     steps:
-      # - name: Checkout Repository
-      #   uses: actions/checkout@v3
-      #   with:
-      #     ref: dummy-data    #checkout different branch
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: dummy-data    #checkout different branch
 
       - name: Generate Directory Listings
-        uses: SommerManX/sommermanx.github.io@main
+        uses: sommermanx/sommermanx.github.io@main
         with:
           FOLDER: data      #directory to generate index
 
