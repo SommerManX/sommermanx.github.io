@@ -11,18 +11,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: main
+          sparse-checkout: |
+            data
 
       - name: Github Pages Directory Listing
         uses: jayanta525/github-pages-directory-listing@v4.0.0
         with:
-          FOLDER: Archive 2024
+          FOLDER: data
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload generator folder
-          path: 'Archive 2024'
+          path: 'data'
 
   deploy:
     needs: pages-directory-listing
