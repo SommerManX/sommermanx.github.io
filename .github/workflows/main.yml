@@ -18,11 +18,11 @@ jobs:
         with:
           FOLDER: data
 
-      # - name: Upload artifact
-      #   uses: actions/upload-pages-artifact@v1
-      #   with:
-      #     # Upload generator folder
-      #     path: 'data'
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload generator folder
+          path: 'data'
 
   deploy:
     needs: pages-directory-listing
