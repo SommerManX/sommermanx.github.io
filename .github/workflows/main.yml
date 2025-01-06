@@ -8,10 +8,10 @@ jobs:
     steps:
       # To use this repository's private action,
       # you must check out the repository
-      # - name: Checkout
-      #   uses: actions/checkout@v3
-      #   with:
-      #     ref: dummy-data
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main
 
       - name: Github Pages Directory Listing
         uses: jayanta525/github-pages-directory-listing@v4.0.0
