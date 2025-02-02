@@ -12,18 +12,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            data
+            frontend/data
 
       - name: Github Pages Directory Listing
         uses: jayanta525/github-pages-directory-listing@v4.0.0
         with:
-          FOLDER: data
+          FOLDER: frontend/data
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload generator folder
-          path: 'data'
+          path: 'frontend/data'
 
   deploy:
     needs: pages-directory-listing
