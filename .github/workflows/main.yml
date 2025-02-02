@@ -42,8 +42,10 @@ jobs:
       - name: Test url
         run: |
           echo "Test url:"
-          curl -H "URL: ${{ steps.upload-artifact.outputs.artifact-url }}" 
+          echo "URL: ${{ steps.upload-artifact.outputs.artifact-url }}" 
           
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+
+
