@@ -3,37 +3,100 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Repository Index</title>
+    <title>Repository File Index</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .file-list-item:hover {
+        background-color: #f0f9ff;
+      }
+    </style>
   </head>
+
   <body class="p-6 bg-gray-100">
-    <h1 class="text-3xl font-bold mb-4">Repository File Index</h1>
-    <ul id="file-list" class="bg-white p-4 rounded shadow"></ul>
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl font-extrabold mb-6 text-gray-800">
+        Repository File Index
+      </h1>
+
+      <div class="bg-white shadow-md rounded-md p-6 mb-4">
+        <p class="text-sm text-gray-600">
+          Files and folders available in this GitHub repository:
+        </p>
+        <ul id="file-list" class="space-y-3 mt-4"></ul>
+      </div>
+    </div>
 
     <script>
       const owner = "SommerManX";
       const repo = "sommermanx.github.io";
+      const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents`;
 
-      async function fetchFiles() {
+      async function fetchFiles(path = "") {
         try {
-          const response = await fetch(
-            `https://api.github.com/repos/${owner}/${repo}/contents`
-          );
+          const response = await fetch(`${apiBase}/${path}`);
           const files = await response.json();
-          displayFiles(files);
+          displayFiles(files, path);
         } catch (error) {
           console.error("Error fetching files:", error);
         }
       }
 
-      function displayFiles(files) {
+      function displayFiles(files, parentPath) {
         const fileList = document.getElementById("file-list");
-        fileList.innerHTML = files
-          .map(
-            (file) =>
-              `<li><a href="${file.html_url}" target="_blank" class="text-blue-600 underline">${file.name}</a></li>`
-          )
-          .join("");
+        
+        files.forEach((file) => {
+          const fullPath = parentPath ? `${parentPath}/${file.name}` : file.name;
+          
+          if (file.type === "dir") {
+            const folderItem = document.createElement("li");
+            folderItem.innerHTML = `<span class="font-bold text-gray-700 cursor-pointer">
+              📁 ${file.name}
+            </span>`;
+            folderItem.addEventListener("click", () => toggleFolder(fullPath, folderItem));
+            fileList.appendChild(folderItem);
+          } else if (file.type === "file") {
+            const fileItem = document.createElement("li");
+            fileItem.innerHTML = `<a href="${file.html_url}" target="_blank" class="text-blue-700 font-semibold hover:underline">
+              📄 ${file.name}
+            </a>`;
+            fileList.appendChild(fileItem);
+          }
+        });
+      }
+
+      async function toggleFolder(path, folderItem) {
+        if (folderItem.dataset.expanded === "true") {
+          // Collapse folder
+          folderItem.dataset.expanded = "false";
+          folderItem.querySelector("ul")?.remove();
+        } else {
+          // Expand folder and fetch files
+          folderItem.dataset.expanded = "true";
+          const sublist = document.createElement("ul");
+          sublist.classList.add("pl-6", "space-y-2");
+          folderItem.appendChild(sublist);
+
+          const response = await fetch(`${apiBase}/${path}`);
+          const files = await response.json();
+
+          files.forEach((file) => {
+            const listItem = document.createElement("li");
+            if (file.type === "dir") {
+              listItem.innerHTML = `<span class="font-bold text-gray-700 cursor-pointer">
+                📁 ${file.name}
+              </span>`;
+              listItem.addEventListener("click", () => toggleFolder(`${path}/${file.name}`, listItem));
+            } else {
+              listItem.innerHTML = `<a href="${file.html_url}" target="_blank" class="text-blue-700 font-semibold hover:underline">
+                📄 ${file.name}
+              </a>`;
+            }
+            sublist.appendChild(listItem);
+          });
+        }
       }
 
       fetchFiles();
