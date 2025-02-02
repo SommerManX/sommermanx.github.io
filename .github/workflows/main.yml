@@ -41,6 +41,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug - List uploaded artifacts
+        run: echo "Artifacts: ${{ steps.upload.outputs.artifact-name }}"
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
         with:
