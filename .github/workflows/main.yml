@@ -34,7 +34,7 @@ jobs:
     # Deploy to the github-pages environment
     environment:
       name: github-pages
-      # url: ${{ steps.upload-artifact.outputs.artifact-url }}
+      url: ${{ steps.upload-artifact.outputs.artifact-url }}
 
     # Specify runner + deployment step
     runs-on: ubuntu-latest
