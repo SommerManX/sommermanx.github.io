@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Run Actions Template
     steps:
+      # To use this repository's private action,
+      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -18,87 +20,25 @@ jobs:
           FOLDER: data
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
+          # Upload generator folder
           path: 'data'
-
-      - name: List artifacts
-        run: |
-          echo "Listing all artifacts:"
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
 
   deploy:
     needs: pages-directory-listing
     permissions:
-      pages: write
-      id-token: write
-    
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
     environment:
       name: github-pages
+      # url: ${{ steps.upload-artifact.outputs.artifact-url }}
 
+    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: List artifacts before deploy
-        run: |
-          echo "Listing all artifacts before deploy:"
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-        with:
-          artifact_name: 'github-pages'
-
-          
-# name: main
-# on: [push]
-
-# jobs:
-#   pages-directory-listing:
-#     runs-on: ubuntu-latest
-#     name: Run Actions Template
-#     steps:
-#       # To use this repository's private action,
-#       # you must check out the repository
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#         with:
-#           sparse-checkout: |
-#             data
-
-#       - name: Github Pages Directory Listing
-#         uses: jayanta525/github-pages-directory-listing@v4.0.0
-#         with:
-#           FOLDER: data
-
-#       - name: Upload artifact
-#         uses: actions/upload-pages-artifact@v3
-#         with:
-#           # Upload generator folder
-#           path: 'data'
-
-#   deploy:
-#     needs: pages-directory-listing
-#     permissions:
-#       pages: write      # to deploy to Pages
-#       id-token: write   # to verify the deployment originates from an appropriate source
-
-#     # Deploy to the github-pages environment
-#     environment:
-#       name: github-pages
-#       # url: ${{ steps.upload-artifact.outputs.artifact-url }}
-
-#     # Specify runner + deployment step
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Deploy to GitHub Pages
-#         id: deployment
-#         uses: actions/deploy-pages@v1
