@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Repository File Index</title>
+    <title>SommerManX CoT Repository</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
@@ -18,12 +18,12 @@
   <body class="p-6 bg-gray-100">
     <div class="container mx-auto max-w-4xl">
       <h1 class="text-4xl font-extrabold mb-6 text-gray-800">
-        Repository File Index
+        SommerManX CoT Repository File Index
       </h1>
 
       <div class="bg-white shadow-md rounded-md p-6 mb-4">
         <p class="text-sm text-gray-600">
-          Files and folders available in this GitHub repository:
+          CoT graphs are in the `data` folder, SommerManX CoT weekly reports are in the `Reports` folder:
         </p>
         <ul id="file-list" class="space-y-3 mt-4"></ul>
       </div>
@@ -49,7 +49,8 @@
         const fileList = document.getElementById("file-list");
 
         files.forEach((file) => {
-          const fullPath = parentPath ? `${parentPath}/${file.name}` : file.name;
+          const fullPath =  file.name;
+          // const fullPath = parentPath ? `${parentPath}/${file.name}` : file.name;
 
           if (file.type === "dir") {
             const folderItem = document.createElement("li");
