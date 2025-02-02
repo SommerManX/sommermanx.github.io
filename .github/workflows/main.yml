@@ -6,8 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Run Actions Template
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -20,25 +18,71 @@ jobs:
           FOLDER: data
 
       - name: Upload artifact
+        id: upload
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload generator folder
           path: 'data'
 
   deploy:
     needs: pages-directory-listing
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+      pages: write
+      id-token: write
 
-    # Deploy to the github-pages environment
     environment:
       name: github-pages
-      # url: ${{ steps.upload-artifact.outputs.artifact-url }}
 
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v1
+        with:
+          artifact-name: 'data'
+
+# name: main
+# on: [push]
+
+# jobs:
+#   pages-directory-listing:
+#     runs-on: ubuntu-latest
+#     name: Run Actions Template
+#     steps:
+#       # To use this repository's private action,
+#       # you must check out the repository
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#         with:
+#           sparse-checkout: |
+#             data
+
+#       - name: Github Pages Directory Listing
+#         uses: jayanta525/github-pages-directory-listing@v4.0.0
+#         with:
+#           FOLDER: data
+
+#       - name: Upload artifact
+#         uses: actions/upload-pages-artifact@v3
+#         with:
+#           # Upload generator folder
+#           path: 'data'
+
+#   deploy:
+#     needs: pages-directory-listing
+#     permissions:
+#       pages: write      # to deploy to Pages
+#       id-token: write   # to verify the deployment originates from an appropriate source
+
+#     # Deploy to the github-pages environment
+#     environment:
+#       name: github-pages
+#       # url: ${{ steps.upload-artifact.outputs.artifact-url }}
+
+#     # Specify runner + deployment step
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Deploy to GitHub Pages
+#         id: deployment
+#         uses: actions/deploy-pages@v1
