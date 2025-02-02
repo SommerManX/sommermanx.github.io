@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Repository Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-6 bg-gray-100">
+    <h1 class="text-3xl font-bold mb-4">Repository File Index</h1>
+    <ul id="file-list" class="bg-white p-4 rounded shadow"></ul>
+
+    <script>
+      const owner = "your-github-username";
+      const repo = "your-repo-name";
+
+      async function fetchFiles() {
+        try {
+          const response = await fetch(
+            `https://api.github.com/repos/${owner}/${repo}/contents`
+          );
+          const files = await response.json();
+          displayFiles(files);
+        } catch (error) {
+          console.error("Error fetching files:", error);
+        }
+      }
+
+      function displayFiles(files) {
+        const fileList = document.getElementById("file-list");
+        fileList.innerHTML = files
+          .map(
+            (file) =>
+              `<li><a href="${file.html_url}" target="_blank" class="text-blue-600 underline">${file.name}</a></li>`
+          )
+          .join("");
+      }
+
+      fetchFiles();
+    </script>
+  </body>
+</html>
