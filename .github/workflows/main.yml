@@ -45,13 +45,12 @@ jobs:
           echo "Listing all artifacts:"
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
-               "https://api.github.com/repos/${{ github.repository }}/actions/artifacts"
+               "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
         with:
-          artifact_name: 'github-pages'
-          
+          artifact_name: 'github-pages'          
           
           
 # name: main
