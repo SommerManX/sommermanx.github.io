@@ -44,6 +44,8 @@ jobs:
         run: |
           echo "Test url:"
           echo "test: ${{ toJson(steps) }}" 
+          echo "test: ${{ toJson(deploy) }}" 
+          echo "test: ${{ toJson(deployment) }}" 
           echo "URL: ${{ steps.deploy.upload-artifact.outputs.artifact-url }}" 
           
       - name: Deploy to GitHub Pages
