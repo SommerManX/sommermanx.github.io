@@ -17,6 +17,9 @@ jobs:
         with:
           FOLDER: data
 
+      - name: Debug - List files in data directory
+        run: ls -al data
+
       - name: Upload artifact
         id: upload
         uses: actions/upload-pages-artifact@v3
@@ -41,7 +44,7 @@ jobs:
         uses: actions/deploy-pages@v1
         with:
           artifact_name: 'data'
-
+          
           
 # name: main
 # on: [push]
