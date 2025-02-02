@@ -25,6 +25,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'data'
+          name: 'github-pages'
 
   deploy:
     needs: pages-directory-listing
@@ -43,7 +44,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
         with:
-          artifact_name: 'data'
+          artifact_name: 'github-pages'
           
           
 # name: main
