@@ -35,7 +35,7 @@ jobs:
     # Deploy to the github-pages environment
     environment:
       name: github-pages
-      url: ${{ steps.upload-artifact.outputs.artifact-url }}
+      url: ${{ steps.deploy.outputs.artifact-url }}
 
     # Specify runner + deployment step
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
       - name: Test url
         run: |
           echo "Test url:"
-          echo "URL: ${{ steps.upload-artifact.outputs.artifact-url }}" 
+          echo "URL: ${{ steps.deploy.upload-artifact.outputs.artifact-url }}" 
           
       - name: Deploy to GitHub Pages
         id: deployment
