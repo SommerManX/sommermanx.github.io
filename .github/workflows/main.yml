@@ -40,8 +40,9 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
         with:
-          artifact-name: 'data'
+          artifact_name: 'data'
 
+          
 # name: main
 # on: [push]
 
